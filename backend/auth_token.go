@@ -8,7 +8,7 @@ import (
 	"github.com/zalando/go-keyring"
 )
 
-const authTokenKeyringService = "TwitterXMediaBatchDownloader"
+const authTokenKeyringService = .mh_dow_x"
 
 func normalizeAuthTokenSlot(slot string) (string, error) {
 	switch strings.ToLower(strings.TrimSpace(slot)) {

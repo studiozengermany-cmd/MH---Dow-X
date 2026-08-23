@@ -78,25 +78,25 @@ export function DebugLoggerPage() {
     };
     return (<div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Debug Logs</h1>
+        <h1 className="text-2xl font-bold">Nhật ký lỗi / Debug Logs</h1>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={handleExportFailed} className="gap-1.5">
             <FileDown className="h-4 w-4"/>
-            Export Failed
+            Xuất lỗi / Export Failed
           </Button>
           <Button variant="outline" size="sm" onClick={handleCopy} disabled={logs.length === 0} className="gap-1.5">
             {copied ? <CircleCheck className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
-            Copy
+            Sao chép / Copy
           </Button>
           <Button variant="destructive" size="sm" onClick={handleClear} disabled={logs.length === 0} className="gap-1.5">
             <Trash2 className="h-4 w-4"/>
-            Clear
+            Xóa / Clear
           </Button>
         </div>
       </div>
 
       <div ref={scrollRef} className="h-[calc(100vh-220px)] overflow-y-auto rounded-lg bg-muted/50 p-4 font-mono text-xs">
-        {logs.length === 0 ? (<p className="text-muted-foreground lowercase">no logs yet...</p>) : (logs.map((log, i) => (<div key={i} className="flex gap-2 py-0.5">
+        {logs.length === 0 ? (<p className="text-muted-foreground lowercase">chưa có nhật ký... / no logs yet...</p>) : (logs.map((log, i) => (<div key={i} className="flex gap-2 py-0.5">
               <span className="text-muted-foreground shrink-0">
                 [{formatTime(log.timestamp)}]
               </span>

@@ -9,7 +9,7 @@ on:
 env:
   NODE_VERSION: '24'
   PNPM_VERSION: '10'
-  APP_NAME: TwitterXMediaBatchDownloader
+  APP_NAME: MH-Dow-X
 
 jobs:
   build-windows:
@@ -161,7 +161,7 @@ jobs:
             runner: ubuntu-24.04
             wails_platform: linux/amd64
             artifact_name: linux-portable
-            output_name: TwitterXMediaBatchDownloader.AppImage
+            output_name: MH-Dow-X.AppImage
             appimage_arch: x86_64
             appimagetool_arch: x86_64
             pkgconfig_dir: /usr/lib/x86_64-linux-gnu/pkgconfig
@@ -169,7 +169,7 @@ jobs:
             runner: ubuntu-24.04-arm
             wails_platform: linux/arm64
             artifact_name: linux-portable-arm
-            output_name: TwitterXMediaBatchDownloader-ARM.AppImage
+            output_name: MH-Dow-X-ARM.AppImage
             appimage_arch: aarch64
             appimagetool_arch: aarch64
             pkgconfig_dir: /usr/lib/aarch64-linux-gnu/pkgconfig
@@ -250,29 +250,29 @@ jobs:
 
           cp "build/bin/${{ env.APP_NAME }}" AppDir/usr/bin/
 
-          cat > AppDir/twitterxmediabatchdownloader.desktop << 'EOF'
+          cat > AppDir/MH-Dow-X.desktop << 'EOF'
           [Desktop Entry]
-          Name=Twitter/X Media Batch Downloader
-          Exec=TwitterXMediaBatchDownloader
-          Icon=twitterxmediabatchdownloader
+          Name=MH - DOW X
+          Exec=MH-Dow-X
+          Icon=MH-Dow-X
           Type=Application
           Categories=Network;Utility;
           Comment=Download Twitter/X media in batches
           EOF
 
-          cp AppDir/twitterxmediabatchdownloader.desktop AppDir/usr/share/applications/
+          cp AppDir/MH-Dow-X.desktop AppDir/usr/share/applications/
 
           if [ -f "build/appicon.png" ]; then
-            convert build/appicon.png -resize 256x256 AppDir/twitterxmediabatchdownloader.png
+            convert build/appicon.png -resize 256x256 AppDir/MH-Dow-X.png
           elif [ -f "frontend/public/icon.svg" ]; then
-            convert -background none -size 256x256 frontend/public/icon.svg AppDir/twitterxmediabatchdownloader.png
+            convert -background none -size 256x256 frontend/public/icon.svg AppDir/MH-Dow-X.png
           else
             echo "Warning: No icon found, building without icon"
           fi
 
-          if [ -f "AppDir/twitterxmediabatchdownloader.png" ]; then
-            cp AppDir/twitterxmediabatchdownloader.png AppDir/usr/share/icons/hicolor/256x256/apps/
-            cp AppDir/twitterxmediabatchdownloader.png AppDir/.DirIcon
+          if [ -f "AppDir/MH-Dow-X.png" ]; then
+            cp AppDir/MH-Dow-X.png AppDir/usr/share/icons/hicolor/256x256/apps/
+            cp AppDir/MH-Dow-X.png AppDir/.DirIcon
           fi
 
           cat > AppDir/AppRun << 'EOF'
@@ -281,7 +281,7 @@ jobs:
           HERE=${SELF%/*}
           export PATH="${HERE}/usr/bin/:${PATH}"
           export LD_LIBRARY_PATH="${HERE}/usr/lib/:${LD_LIBRARY_PATH}"
-          exec "${HERE}/usr/bin/TwitterXMediaBatchDownloader" "$@"
+          exec "${HERE}/usr/bin/MH-Dow-X" "$@"
           EOF
           chmod +x AppDir/AppRun
 
@@ -325,10 +325,10 @@ jobs:
 
             ## Downloads
 
-            - `TwitterXMediaBatchDownloader.exe` - Windows
-            - `TwitterXMediaBatchDownloader.dmg` - macOS
-            - `TwitterXMediaBatchDownloader.AppImage` - Linux AMD64
-            - `TwitterXMediaBatchDownloader-ARM.AppImage` - Linux ARM64
+            - `MH-Dow-X.exe` - Windows
+            - `MH-Dow-X.dmg` - macOS
+            - `MH-Dow-X.AppImage` - Linux AMD64
+            - `MH-Dow-X-ARM.AppImage` - Linux ARM64
 
             <details>
             <summary><b>Linux Requirements</b></summary>
@@ -352,14 +352,14 @@ jobs:
 
             After installing the dependency, make the AppImage executable:
             ```bash
-            chmod +x TwitterXMediaBatchDownloader.AppImage
-            ./TwitterXMediaBatchDownloader.AppImage
+            chmod +x MH-Dow-X.AppImage
+            ./MH-Dow-X.AppImage
             ```
 
             For ARM64:
             ```bash
-            chmod +x TwitterXMediaBatchDownloader-ARM.AppImage
-            ./TwitterXMediaBatchDownloader-ARM.AppImage
+            chmod +x MH-Dow-X-ARM.AppImage
+            ./MH-Dow-X-ARM.AppImage
             ```
 
             </details>

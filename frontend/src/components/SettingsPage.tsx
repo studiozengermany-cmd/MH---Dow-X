@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { flushSync } from "react-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { InputWithContext } from "@/components/ui/input-with-context";
@@ -58,6 +59,7 @@ function buildDependencyVersionText(name: string, installed: boolean, installedV
     return latestVersion ? `Latest ${name}: ${latestVersion}` : null;
 }
 export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: SettingsPageProps) {
+    const { t } = useTranslation();
     const cachedExtractorStatus = getCachedDependencyStatus("extractor");
     const cachedFfmpegStatus = getCachedDependencyStatus("ffmpeg");
     const cachedExiftoolStatus = getCachedDependencyStatus("exiftool");
@@ -401,15 +403,15 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
     };
     return (<div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Settings</h1>
+        <h1 className="text-2xl font-bold">{t('settings.title')}</h1>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => setShowResetConfirm(true)} className="gap-1.5">
             <RotateCcw className="h-4 w-4"/>
-            Reset to Default
+            {t('settings.resetToDefault')}
           </Button>
           <Button onClick={handleSave} className="gap-1.5">
             <Save className="h-4 w-4"/>
-            Save Changes
+            {t('settings.saveChanges')}
           </Button>
         </div>
       </div>
@@ -417,19 +419,19 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
       <div className="flex gap-2 border-b">
         <Button variant={activeTab === "general" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("general")} className="rounded-b-none gap-2">
           <MonitorCog className="h-4 w-4"/>
-          General
+          {t('settings.general')}
         </Button>
         <Button variant={activeTab === "downloads" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("downloads")} className="rounded-b-none gap-2">
           <Download className="h-4 w-4"/>
-          Downloads
+          {t('settings.downloads')}
         </Button>
         <Button variant={activeTab === "naming" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("naming")} className="rounded-b-none gap-2">
           <FileSignature className="h-4 w-4"/>
-          Naming
+          {t('settings.naming')}
         </Button>
         <Button variant={activeTab === "dependencies" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("dependencies")} className="rounded-b-none gap-2">
           <PackageSearch className="h-4 w-4"/>
-          Dependencies
+          {t('settings.dependencies')}
         </Button>
       </div>
 
@@ -438,28 +440,28 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
             <div className="space-y-4">
               <div className="grid grid-cols-[8rem_8rem] gap-4">
                 <div className="min-w-0 space-y-2">
-                  <Label htmlFor="theme-mode">Mode</Label>
+                  <Label htmlFor="theme-mode">{t('settings.mode')}</Label>
                   <Select value={tempSettings.themeMode} onValueChange={(value: "auto" | "light" | "dark") => setTempSettings((prev) => ({ ...prev, themeMode: value }))}>
                     <SelectTrigger id="theme-mode" className="w-full">
-                      <SelectValue placeholder="Select theme mode"/>
+                      <SelectValue placeholder={t('settings.selectThemeMode')}/>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="auto">Auto</SelectItem>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="auto">{t('settings.auto')}</SelectItem>
+                      <SelectItem value="light">{t('settings.light')}</SelectItem>
+                      <SelectItem value="dark">{t('settings.dark')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="min-w-0 space-y-2">
-                  <Label htmlFor="base-color">Base Color</Label>
+                  <Label htmlFor="base-color">{t('settings.baseColor')}</Label>
                   <Select value={tempSettings.baseColor} onValueChange={(value) => handleBaseColorChange(value as BaseColorName)} onOpenChange={(open) => {
                 if (!open) {
                     restoreSelectedTheme();
                 }
             }}>
                     <SelectTrigger id="base-color" className="w-full">
-                      <SelectValue placeholder="Select a base color"/>
+                      <SelectValue placeholder={t('settings.selectBaseColor')}/>
                     </SelectTrigger>
                     <SelectContent onMouseLeave={restoreSelectedTheme}>
                       {baseColors.map((baseColor) => (<SelectItem key={baseColor.name} value={baseColor.name} onMouseMove={() => previewBaseColor(baseColor.name)} onFocus={() => previewBaseColor(baseColor.name)}>
@@ -478,14 +480,14 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="theme">Theme</Label>
+                <Label htmlFor="theme">{t('settings.theme')}</Label>
                 <Select value={tempSettings.theme} onValueChange={(value) => handleThemeChange(value as SettingsType["theme"])} onOpenChange={(open) => {
                 if (!open) {
                     restoreSelectedTheme();
                 }
             }}>
                   <SelectTrigger id="theme" className="w-32">
-                    <SelectValue placeholder="Select a theme"/>
+                    <SelectValue placeholder={t('settings.selectTheme')}/>
                   </SelectTrigger>
                   <SelectContent onMouseLeave={restoreSelectedTheme}>
                     {availableThemes.map((theme) => (<SelectItem key={theme.name} value={theme.name} onMouseMove={() => previewTheme(theme.name)} onFocus={() => previewTheme(theme.name)}>
@@ -503,11 +505,11 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="font">Font</Label>
+                <Label htmlFor="font">{t('settings.font')}</Label>
                 <div className="flex flex-wrap items-center gap-2">
                   <Select value={tempSettings.fontFamily} onValueChange={(value: FontFamily) => setTempSettings((prev) => ({ ...prev, fontFamily: value }))}>
                     <SelectTrigger id="font" className="max-w-full min-w-40">
-                      <SelectValue placeholder="Select a font"/>
+                      <SelectValue placeholder={t('settings.selectFont')}/>
                     </SelectTrigger>
                     <SelectContent>
                       {fontOptions.map((font) => (<SelectItem key={font.value} value={font.value}>
@@ -517,11 +519,11 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                   </Select>
                   <Button type="button" variant="outline" onClick={() => setShowAddFontDialog(true)} className="shrink-0 gap-1.5">
                     <Plus className="h-4 w-4"/>
-                    Add Font
+                    {t('settings.addFont')}
                   </Button>
                 </div>
                 {tempSettings.customFonts.length > 0 && (<div className="space-y-2 rounded-lg border bg-muted/20 p-3">
-                    <p className="text-xs font-medium text-muted-foreground">Custom Fonts</p>
+                    <p className="text-xs font-medium text-muted-foreground">{t('settings.customFonts')}</p>
                     <div className="space-y-2">
                       {tempSettings.customFonts.map((font) => (<div key={font.value} className="flex items-center justify-between gap-3 rounded-md border bg-background/70 px-3 py-2">
                           <div className="min-w-0">
@@ -540,12 +542,12 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
 
               <div className="flex items-center gap-3 pt-2">
                 <Switch id="sfx-enabled" checked={tempSettings.sfxEnabled} onCheckedChange={(checked) => setTempSettings((prev) => ({ ...prev, sfxEnabled: checked }))}/>
-                <Label htmlFor="sfx-enabled" className="cursor-pointer text-sm">Sound Effects</Label>
+                <Label htmlFor="sfx-enabled" className="cursor-pointer text-sm">{t('settings.soundEffects')}</Label>
               </div>
 
               <div className="flex items-center gap-3 pt-1">
                 <Switch id="show-update-notifications" checked={tempSettings.showUpdateNotifications} onCheckedChange={(checked) => setTempSettings((prev) => ({ ...prev, showUpdateNotifications: checked }))}/>
-                <Label htmlFor="show-update-notifications" className="cursor-pointer text-sm">Update Notifications</Label>
+                <Label htmlFor="show-update-notifications" className="cursor-pointer text-sm">{t('settings.updateNotifications')}</Label>
               </div>
             </div>
 
@@ -553,31 +555,31 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
 
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="download-path">Download Path</Label>
+                <Label htmlFor="download-path">{t('settings.downloadPath')}</Label>
                 <div className="flex gap-2">
                   <InputWithContext id="download-path" value={tempSettings.downloadPath} onChange={(e) => setTempSettings((prev) => ({ ...prev, downloadPath: e.target.value }))} placeholder="C:\Users\YourUsername\Pictures"/>
                   <Button type="button" onClick={handleBrowseFolder} className="gap-1.5">
                     <FolderOpen className="h-4 w-4"/>
-                    Browse
+                    {t('settings.browse')}
                   </Button>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <Label>File Handling</Label>
+                <Label>{t('settings.fileHandling')}</Label>
                 <div className="flex items-center gap-3">
                   <Switch id="skip-existing-files" checked={tempSettings.skipExistingFiles} onCheckedChange={(checked) => setTempSettings((prev) => ({ ...prev, skipExistingFiles: checked }))}/>
-                  <Label htmlFor="skip-existing-files" className="cursor-pointer font-normal">Skip Existing Files</Label>
+                  <Label htmlFor="skip-existing-files" className="cursor-pointer font-normal">{t('settings.skipExistingFiles')}</Label>
                 </div>
                 <div className="flex items-center gap-3">
                   <Switch id="delete-incomplete-files" checked={tempSettings.deleteIncompleteFiles} onCheckedChange={(checked) => setTempSettings((prev) => ({ ...prev, deleteIncompleteFiles: checked }))}/>
-                  <Label htmlFor="delete-incomplete-files" className="cursor-pointer font-normal">Delete Incomplete Files</Label>
+                  <Label htmlFor="delete-incomplete-files" className="cursor-pointer font-normal">{t('settings.deleteIncompleteFiles')}</Label>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <Label className="flex items-center gap-2">
-                  GIF Conversion
+                  {t('settings.gifConversion')}
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <CircleQuestionMark className="h-3.5 w-3.5 cursor-help text-muted-foreground"/>
@@ -589,10 +591,10 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                 </Label>
                 <div className="flex items-center gap-3">
                   <Switch id="auto-convert-gifs" checked={tempSettings.autoConvertGifs} onCheckedChange={(checked) => setTempSettings((prev) => ({ ...prev, autoConvertGifs: checked }))} disabled={!ffmpegInstalled}/>
-                  <Label htmlFor="auto-convert-gifs" className={!ffmpegInstalled ? "text-muted-foreground" : "cursor-pointer"}>Auto Convert GIFs</Label>
+                  <Label htmlFor="auto-convert-gifs" className={!ffmpegInstalled ? "text-muted-foreground" : "cursor-pointer"}>{t('settings.autoConvertGifs')}</Label>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <Label htmlFor="gif-quality" className={!ffmpegInstalled || !tempSettings.autoConvertGifs ? "text-muted-foreground" : undefined}>GIF Quality</Label>
+                  <Label htmlFor="gif-quality" className={!ffmpegInstalled || !tempSettings.autoConvertGifs ? "text-muted-foreground" : undefined}>{t('settings.gifQuality')}</Label>
                   <div className="flex items-center gap-2">
                     <Select value={tempSettings.gifQuality} onValueChange={(value: GifQuality) => {
                 setTempSettings((prev) => ({
@@ -601,22 +603,22 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                 }));
             }} disabled={!ffmpegInstalled || !tempSettings.autoConvertGifs}>
                       <SelectTrigger id="gif-quality" className="w-fit">
-                        <SelectValue placeholder="Select quality"/>
+                        <SelectValue placeholder={t('settings.selectQuality')}/>
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="fast">Fast</SelectItem>
-                        <SelectItem value="better">Better</SelectItem>
+                        <SelectItem value="fast">{t('settings.fast')}</SelectItem>
+                        <SelectItem value="better">{t('settings.better')}</SelectItem>
                       </SelectContent>
                     </Select>
                     <Select value={tempSettings.gifResolution} onValueChange={(value: GifResolution) => setTempSettings((prev) => ({ ...prev, gifResolution: value }))} disabled={!ffmpegInstalled || !tempSettings.autoConvertGifs}>
                       <SelectTrigger id="gif-resolution" className="w-fit">
-                        <SelectValue placeholder="Resolution"/>
+                        <SelectValue placeholder={t('settings.resolution')}/>
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="original">Original</SelectItem>
-                        <SelectItem value="high">High (800px)</SelectItem>
-                        <SelectItem value="medium">Medium (600px)</SelectItem>
-                        <SelectItem value="low">Low (400px)</SelectItem>
+                        <SelectItem value="original">{t('settings.original')}</SelectItem>
+                        <SelectItem value="high">{t('settings.high')}</SelectItem>
+                        <SelectItem value="medium">{t('settings.medium')}</SelectItem>
+                        <SelectItem value="low">{t('settings.low')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -628,7 +630,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
         {activeTab === "downloads" && (<div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] md:gap-6">
             <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <Label>Download Controls</Label>
+                    <Label>{t('settings.downloadControls')}</Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <CircleQuestionMark className="h-3.5 w-3.5 cursor-help text-muted-foreground"/>
@@ -642,7 +644,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <Label htmlFor="concurrent-downloads" className="flex items-center gap-2 text-xs">
-                        Concurrent Downloads
+                        {t('settings.concurrentDownloads')}
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <CircleQuestionMark className="h-3.5 w-3.5 cursor-help text-muted-foreground"/>
@@ -666,7 +668,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
 
                     <div className="space-y-1.5">
                       <Label htmlFor="retry-attempts" className="flex items-center gap-2 text-xs">
-                        Retry Attempts
+                        {t('settings.retryAttempts')}
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <CircleQuestionMark className="h-3.5 w-3.5 cursor-help text-muted-foreground"/>
@@ -691,7 +693,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                     <div className="space-y-1.5">
-                      <Label htmlFor="download-speed-limit" className="text-xs">Speed Limit</Label>
+                      <Label htmlFor="download-speed-limit" className="text-xs">{t('settings.speedLimit')}</Label>
                       <div className="flex items-center gap-2">
                         <InputWithContext id="download-speed-limit" type="number" min="0" max="10485760" step="1" value={tempSettings.downloadSpeedLimitKBps} onChange={(e) => {
                 const value = Number(e.target.value);
@@ -702,24 +704,24 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="download-delay" className="text-xs">Base Delay</Label>
+                      <Label htmlFor="download-delay" className="text-xs">{t('settings.baseDelay')}</Label>
                       <div className="flex items-center gap-2">
                         <InputWithContext id="download-delay" type="number" min="0" max="3600" step="0.1" value={tempSettings.downloadDelaySeconds} onChange={(e) => {
                 const value = Number(e.target.value);
                 setTempSettings((prev) => ({ ...prev, downloadDelaySeconds: Number.isFinite(value) ? Math.min(3600, Math.max(0, value)) : 0 }));
             }} className="w-24"/>
-                        <span className="text-xs text-muted-foreground">sec</span>
+                        <span className="text-xs text-muted-foreground">{t('settings.sec')}</span>
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="download-delay-jitter" className="text-xs">Random Extra</Label>
+                      <Label htmlFor="download-delay-jitter" className="text-xs">{t('settings.randomExtra')}</Label>
                       <div className="flex items-center gap-2">
                         <InputWithContext id="download-delay-jitter" type="number" min="0" max="3600" step="0.1" value={tempSettings.downloadDelayJitterSeconds} onChange={(e) => {
                 const value = Number(e.target.value);
                 setTempSettings((prev) => ({ ...prev, downloadDelayJitterSeconds: Number.isFinite(value) ? Math.min(3600, Math.max(0, value)) : 0 }));
             }} className="w-24"/>
-                        <span className="text-xs text-muted-foreground">sec</span>
+                        <span className="text-xs text-muted-foreground">{t('settings.sec')}</span>
                       </div>
                     </div>
                   </div>
@@ -730,7 +732,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="proxy" className="flex items-center gap-2">
-                  Proxy
+                  {t('settings.proxy')}
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <CircleQuestionMark className="h-3.5 w-3.5 cursor-help text-muted-foreground"/>
@@ -745,7 +747,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
 
               <div className="space-y-2">
                 <Label htmlFor="fetch-timeout" className="flex items-center gap-2">
-                  Fetch Timeout
+                  {t('settings.fetchTimeout')}
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <CircleQuestionMark className="h-3.5 w-3.5 cursor-help text-muted-foreground"/>
@@ -781,10 +783,10 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
 
         {activeTab === "naming" && (<div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 items-start">
             <div className="md:pr-8 md:border-r border-border">
-              <FormatEditor title="Folder" value={tempSettings.folderTemplate} defaultValue={DEFAULT_FOLDER_TEMPLATE} tokens={FOLDER_TEMPLATE_VARIABLES} placeholder={DEFAULT_FOLDER_TEMPLATE} render={(t) => renderFolderTemplate(t, SAMPLE_FOLDER_DATA)} onChange={(next) => setTempSettings((prev) => ({ ...prev, folderTemplate: next }))}/>
+              <FormatEditor title={t('settings.folder')} value={tempSettings.folderTemplate} defaultValue={DEFAULT_FOLDER_TEMPLATE} tokens={FOLDER_TEMPLATE_VARIABLES} placeholder={DEFAULT_FOLDER_TEMPLATE} render={(t) => renderFolderTemplate(t, SAMPLE_FOLDER_DATA)} onChange={(next) => setTempSettings((prev) => ({ ...prev, folderTemplate: next }))}/>
             </div>
             <div>
-              <FormatEditor title="Filename" value={tempSettings.filenameTemplate} defaultValue={DEFAULT_FILENAME_TEMPLATE} tokens={FILENAME_TEMPLATE_VARIABLES} placeholder={DEFAULT_FILENAME_TEMPLATE} suffix=".jpg" render={(t) => renderFilenameTemplate(t, SAMPLE_FILENAME_DATA)} onChange={(next) => setTempSettings((prev) => ({ ...prev, filenameTemplate: next }))}/>
+              <FormatEditor title={t('settings.filename')} value={tempSettings.filenameTemplate} defaultValue={DEFAULT_FILENAME_TEMPLATE} tokens={FILENAME_TEMPLATE_VARIABLES} placeholder={DEFAULT_FILENAME_TEMPLATE} suffix=".jpg" render={(t) => renderFilenameTemplate(t, SAMPLE_FILENAME_DATA)} onChange={(next) => setTempSettings((prev) => ({ ...prev, filenameTemplate: next }))}/>
             </div>
           </div>)}
 
@@ -792,7 +794,7 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label className="flex flex-wrap items-center gap-2">
-                  <span>Core Xtractor</span>
+                  <span>{t('settings.coreXtractor')}</span>
                   {extractorVersionText && (<span className={extractorUpdateAvailable
                     ? "text-xs font-normal text-amber-600 dark:text-amber-400"
                     : "text-xs font-normal text-muted-foreground"}>
@@ -811,22 +813,22 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                   <Button variant="outline" size="sm" className="h-9" onClick={handleDownloadExtractor} disabled={downloadingExtractor}>
                     {downloadingExtractor ? (<>
                         <Spinner />
-                        Downloading...
+                        {t('settings.downloading')}
                       </>) : (<>
                         <Download className="h-4 w-4"/>
-                        {extractorInstalled ? extractorUpdateAvailable ? "Update Xtractor" : "Reinstall Xtractor" : "Download Xtractor"}
+                        {extractorInstalled ? extractorUpdateAvailable ? t('settings.updateXtractor') : t('settings.reinstallXtractor') : t('settings.downloadXtractor')}
                       </>)}
                   </Button>
                   {extractorInstalled && (<div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                       <Check className="h-4 w-4"/>
-                      Installed
+                      {t('settings.installed')}
                     </div>)}
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label className="flex flex-wrap items-center gap-2">
-                  <span>GIF Conversion</span>
+                  <span>{t('settings.gifConversion')}</span>
                   {ffmpegVersionText && (<span className={ffmpegUpdateAvailable
                     ? "text-xs font-normal text-amber-600 dark:text-amber-400"
                     : "text-xs font-normal text-muted-foreground"}>
@@ -845,22 +847,22 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                   <Button variant="outline" size="sm" className="h-9" onClick={handleDownloadFFmpeg} disabled={downloadingFFmpeg}>
                     {downloadingFFmpeg ? (<>
                         <Spinner />
-                        Downloading...
+                        {t('settings.downloading')}
                       </>) : (<>
                         <Download className="h-4 w-4"/>
-                        {ffmpegInstalled ? ffmpegUpdateAvailable ? "Update FFmpeg" : "Reinstall FFmpeg" : "Download FFmpeg"}
+                        {ffmpegInstalled ? ffmpegUpdateAvailable ? t('settings.updateFFmpeg') : t('settings.reinstallFFmpeg') : t('settings.downloadFFmpeg')}
                       </>)}
                   </Button>
                   {ffmpegInstalled && (<div className="ml-3 flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                       <Check className="h-4 w-4"/>
-                      Installed
+                      {t('settings.installed')}
                     </div>)}
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label className="flex flex-wrap items-center gap-2">
-                  <span>Metadata Embedding</span>
+                  <span>{t('settings.metadataEmbedding')}</span>
                   {exiftoolVersionText && (<span className={exiftoolUpdateAvailable
                     ? "text-xs font-normal text-amber-600 dark:text-amber-400"
                     : "text-xs font-normal text-muted-foreground"}>
@@ -879,15 +881,15 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
                   <Button variant="outline" size="sm" className="h-9" onClick={handleDownloadExifTool} disabled={downloadingExifTool}>
                     {downloadingExifTool ? (<>
                         <Spinner />
-                        Downloading...
+                        {t('settings.downloading')}
                       </>) : (<>
                         <Download className="h-4 w-4"/>
-                        {exiftoolInstalled ? exiftoolUpdateAvailable ? "Update ExifTool" : "Reinstall ExifTool" : "Download ExifTool"}
+                        {exiftoolInstalled ? exiftoolUpdateAvailable ? t('settings.updateExifTool') : t('settings.reinstallExifTool') : t('settings.downloadExifTool')}
                       </>)}
                   </Button>
                   {exiftoolInstalled && (<div className="ml-3 flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                       <Check className="h-4 w-4"/>
-                      Installed
+                      {t('settings.installed')}
                     </div>)}
                 </div>
               </div>
@@ -901,9 +903,9 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
         <DialogContent className="sm:max-w-115 [&>button]:hidden">
           <DialogHeader>
             <div className="flex items-center justify-between gap-3">
-              <DialogTitle>Add Font</DialogTitle>
+              <DialogTitle>{t('settings.addFontTitle')}</DialogTitle>
               <a href="https://fonts.google.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground hover:underline">
-                Open Google Fonts
+                {t('settings.openGoogleFonts')}
                 <ExternalLink className="h-3 w-3"/>
               </a>
             </div>
@@ -911,32 +913,32 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="google-font-url">Google Font URL</Label>
+              <Label htmlFor="google-font-url">{t('settings.googleFontUrl')}</Label>
               <Input id="google-font-url" value={addFontUrl} onChange={(event) => setAddFontUrl(event.target.value)} onKeyDown={(event) => {
             if (event.key === "Enter" && parsedAddFont) {
                 void handleAddFont();
             }
-        }} placeholder="https://fonts.google.com/specimen/Ubuntu" autoFocus/>
+        }} placeholder={t('settings.googleFontUrlPlaceholder')} autoFocus/>
               {addFontUrl.trim() && !parsedAddFont && (<p className="text-xs text-destructive">
-                  Enter a valid Google Fonts URL.
+                  {t('settings.validGoogleFontUrl')}
                 </p>)}
             </div>
             <div className="rounded-md border bg-muted/20 p-4">
-              <p className="mb-2 text-xs font-medium text-muted-foreground">Preview</p>
+              <p className="mb-2 text-xs font-medium text-muted-foreground">{t('settings.preview')}</p>
               <p className="text-2xl font-semibold leading-tight" style={{ fontFamily: parsedAddFont?.fontFamily }}>
                 Aa The quick brown fox
               </p>
               <p className="mt-2 text-sm text-muted-foreground" style={{ fontFamily: parsedAddFont?.fontFamily }}>
-                Twitter/X Media Batch Downloader
+                MH - DOW X
               </p>
             </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={closeAddFontDialog}>
-              Cancel
+              {t('settings.cancel')}
             </Button>
             <Button onClick={() => void handleAddFont()} disabled={!parsedAddFont}>
-              Add
+              {t('settings.add')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -945,14 +947,14 @@ export function SettingsPage({ onUnsavedChangesChange, onResetRequest }: Setting
       <Dialog open={showResetConfirm} onOpenChange={setShowResetConfirm}>
         <DialogContent className="max-w-md [&>button]:hidden">
           <DialogHeader>
-            <DialogTitle>Reset to Default?</DialogTitle>
+            <DialogTitle>{t('settings.resetTitle')}</DialogTitle>
             <DialogDescription>
-              This will reset all settings to their default values. Your custom configurations will be lost.
+              {t('settings.resetDescription')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowResetConfirm(false)}>Cancel</Button>
-            <Button onClick={handleReset}>Reset</Button>
+            <Button variant="outline" onClick={() => setShowResetConfirm(false)}>{t('settings.cancel')}</Button>
+            <Button onClick={handleReset}>{t('settings.reset')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

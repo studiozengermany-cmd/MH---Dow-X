@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-	"twitterxmediabatchdownloader/backend"
+	"mhdowx/backend"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -236,7 +236,7 @@ func (a *App) ExportFailedLogs(content string) (string, error) {
 	}
 
 	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
-		DefaultFilename: fmt.Sprintf("TwitterXMediaBatchDownloader_%s_Failed.txt", time.Now().Format("20060102_150405")),
+		DefaultFilename: fmt.Sprintf("mhdowx_%s_Failed.txt", time.Now().Format("20060102_150405")),
 		Title:           "Export Failed Logs",
 		Filters: []runtime.FileFilter{
 			{

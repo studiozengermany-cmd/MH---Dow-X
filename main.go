@@ -18,7 +18,7 @@ func main() {
 	app := NewApp()
 
 	err := wails.Run(&options.App{
-		Title:     "Twitter/X Media Batch Downloader",
+		Title:     "MH - DOW X",
 		Width:     1024,
 		Height:    600,
 		MinWidth:  1024,

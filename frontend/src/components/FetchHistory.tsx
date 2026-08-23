@@ -17,7 +17,7 @@ export function FetchHistory({ history, onSelect, onRemove }: FetchHistoryProps)
     if (history.length === 0)
         return null;
     return (<div className="space-y-2">
-      <p className="text-sm text-muted-foreground">Recent Fetches</p>
+      <p className="text-sm text-muted-foreground">Tài khoản gần đây / Recent Fetches</p>
       <div className="flex flex-wrap gap-2">
         {history.map((item) => (<div key={item.id} className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-full hover:bg-muted transition-colors group cursor-pointer" onClick={() => onSelect(item)}>
             {item.image ? (<img src={item.image} alt={item.name} className="w-5 h-5 rounded-full"/>) : (<User className="w-5 h-5 text-muted-foreground"/>)}

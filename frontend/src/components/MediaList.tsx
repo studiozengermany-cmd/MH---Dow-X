@@ -632,7 +632,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                 </div>)}
               <div className="text-2xl font-bold text-primary">{formatNumberWithComma(totalUrls)}</div>
             </div>
-            <div className="text-sm text-muted-foreground">items found</div>
+            <div className="text-sm text-muted-foreground">mục đã tìm thấy / items found</div>
           </div>
         </div>) : (<div className="rounded-lg overflow-hidden bg-muted/50 border">
           {accountInfo.banner && (<div className="group/banner relative h-24 w-full bg-cover bg-center" style={{ backgroundImage: `url("${accountInfo.banner}")` }}>
@@ -665,7 +665,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                     </div>)}
                   <div className="text-2xl font-bold text-primary">{formatNumberWithComma(totalUrls)}</div>
                 </div>
-                <div className="text-sm text-muted-foreground">items found</div>
+                <div className="text-sm text-muted-foreground">mục đã tìm thấy / items found</div>
               </div>
             </div>
 
@@ -682,16 +682,16 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                 </button>)}
               {accountInfo.date && (<span className="flex items-center gap-1">
                   <Calendar className="h-3.5 w-3.5"/>
-                  Joined {formatJoinDate(accountInfo.date)}
+                  Tham gia / Joined {formatJoinDate(accountInfo.date)}
                 </span>)}
             </div>
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm mt-3">
-              <span><strong className="text-foreground">{formatNumber(accountInfo.statuses_count)}</strong> <span className="text-muted-foreground">posts</span></span>
+              <span><strong className="text-foreground">{formatNumber(accountInfo.statuses_count)}</strong> <span className="text-muted-foreground">bài viết / posts</span></span>
               <span className="text-muted-foreground">·</span>
-              <span><strong className="text-foreground">{formatNumber(accountInfo.friends_count)}</strong> <span className="text-muted-foreground">following</span></span>
+              <span><strong className="text-foreground">{formatNumber(accountInfo.friends_count)}</strong> <span className="text-muted-foreground">đang theo dõi / following</span></span>
               <span className="text-muted-foreground">·</span>
-              <span><strong className="text-foreground">{formatNumber(accountInfo.followers_count)}</strong> <span className="text-muted-foreground">followers</span></span>
+              <span><strong className="text-foreground">{formatNumber(accountInfo.followers_count)}</strong> <span className="text-muted-foreground">người theo dõi / followers</span></span>
               {accountInfo.media_count ? (<>
                   <span className="text-muted-foreground">·</span>
                   <span><strong className="text-foreground">{formatNumber(accountInfo.media_count)}</strong> <span className="text-muted-foreground">media</span></span>
@@ -704,31 +704,31 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
       <div className="flex items-center gap-4">
         <Select value={sortBy} onValueChange={setSortBy}>
           <SelectTrigger className="w-auto">
-            <SelectValue placeholder="Sort by"/>
+            <SelectValue placeholder="Sắp xếp / Sort by"/>
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="date-desc">Newest</SelectItem>
-            <SelectItem value="date-asc">Oldest</SelectItem>
+            <SelectItem value="date-desc">Mới nhất / Newest</SelectItem>
+            <SelectItem value="date-asc">Cũ nhất / Oldest</SelectItem>
           </SelectContent>
         </Select>
 
         
         {fetchedMediaType === "all" && (<Select value={filterType} onValueChange={setFilterType}>
             <SelectTrigger className="w-auto">
-              <SelectValue placeholder="Filter"/>
+              <SelectValue placeholder="Bộ lọc / Filter"/>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All ({formatNumberWithComma(totalUrls)})</SelectItem>
+              <SelectItem value="all">Tất cả / All ({formatNumberWithComma(totalUrls)})</SelectItem>
               {mediaCounts.photo > 0 && (<SelectItem value="photo">
                   <span className="flex items-center gap-2">
                     <Image className="h-4 w-4 text-blue-500"/>
-                    Images ({formatNumberWithComma(mediaCounts.photo)})
+                    Ảnh / Images ({formatNumberWithComma(mediaCounts.photo)})
                   </span>
                 </SelectItem>)}
               {mediaCounts.video > 0 && (<SelectItem value="video">
                   <span className="flex items-center gap-2">
                     <Video className="h-4 w-4 text-purple-500"/>
-                    Videos ({formatNumberWithComma(mediaCounts.video)})
+                    Video / Videos ({formatNumberWithComma(mediaCounts.video)})
                   </span>
                 </SelectItem>)}
               {mediaCounts.gif > 0 && (<SelectItem value="gif">
@@ -740,7 +740,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
               {mediaCounts.text > 0 && (<SelectItem value="text">
                   <span className="flex items-center gap-2">
                     <FileText className="h-4 w-4 text-orange-500"/>
-                    Text ({formatNumberWithComma(mediaCounts.text)})
+                    Văn bản / Text ({formatNumberWithComma(mediaCounts.text)})
                   </span>
                 </SelectItem>)}
             </SelectContent>
@@ -762,20 +762,20 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
         <div className="flex-1"/>
         <Button variant="outline" onClick={handleOpenFolder} disabled={!folderExists}>
           <FolderOpen className="h-4 w-4"/>
-          Open Folder
+          Mở thư mục / Open Folder
         </Button>
         <div className="flex items-center gap-2">
           {isDownloading && (<Button variant="destructive" onClick={handleStopDownload}>
               <StopCircle className="h-4 w-4"/>
-              Stop
+              Dừng / Stop
             </Button>)}
           <Button onClick={handleDownload} disabled={anyDownloadActive}>
           {isDownloading ? (<>
               <Spinner />
-              Downloading...
+              Đang tải... / Downloading...
             </>) : (<>
               <Download className="h-4 w-4"/>
-              Download {selectedItems.size > 0 ? `${selectedItems.size}` : "All"}
+              Tải / Download {selectedItems.size > 0 ? `${selectedItems.size}` : "Tất cả / All"}
             </>)}
           </Button>
         </div>
@@ -785,7 +785,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
       {isDownloading && downloadProgress && (<div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">
-              Downloading {downloadProgress.current} of {downloadProgress.total}
+              Đang tải / Downloading {downloadProgress.current} / {downloadProgress.total}
             </span>
             <span className="font-medium">{downloadProgress.percent}%</span>
           </div>
@@ -796,9 +796,9 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
       <div className="flex items-center gap-2">
         <Checkbox checked={selectedItems.size === filteredTimeline.length && filteredTimeline.length > 0} onCheckedChange={toggleSelectAll}/>
         <span className="text-sm text-muted-foreground">
-          Select all ({formatNumberWithComma(filteredTimeline.length)} items)
+          Chọn tất cả / Select all ({formatNumberWithComma(filteredTimeline.length)} mục / items)
         </span>
-        {selectedItems.size > 0 && (<Badge variant="secondary">{formatNumberWithComma(selectedItems.size)} selected</Badge>)}
+        {selectedItems.size > 0 && (<Badge variant="secondary">{formatNumberWithComma(selectedItems.size)} đã chọn / selected</Badge>)}
       </div>
 
       
@@ -850,7 +850,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      {isItemDownloading ? (<p>Downloading...</p>) : isItemSkipped ? (<p>Already exists</p>) : isItemDownloaded ? (<p>Downloaded</p>) : isItemFailed ? (<p>Failed</p>) : (<p>Download</p>)}
+                      {isItemDownloading ? (<p>Đang tải... / Downloading...</p>) : isItemSkipped ? (<p>Đã tồn tại / Already exists</p>) : isItemDownloaded ? (<p>Đã tải / Downloaded</p>) : isItemFailed ? (<p>Lỗi / Failed</p>) : (<p>Tải / Download</p>)}
                     </TooltipContent>
                   </Tooltip>
                   <Button size="icon" variant="outline" onClick={() => handleOpenTweet(item.tweet_id)}>
@@ -886,8 +886,8 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
-                        {isItemDownloading ? (<p>Downloading...</p>) : isItemSkipped ? (<p>Already exists</p>) : isItemDownloaded ? (<p>Downloaded</p>) : isItemFailed ? (<p>Failed</p>) : (<p>Download</p>)}
-                      </TooltipContent>
+                      {isItemDownloading ? (<p>Đang tải... / Downloading...</p>) : isItemSkipped ? (<p>Đã tồn tại / Already exists</p>) : isItemDownloaded ? (<p>Đã tải / Downloaded</p>) : isItemFailed ? (<p>Lỗi / Failed</p>) : (<p>Tải / Download</p>)}
+                    </TooltipContent>
                     </Tooltip>
                     <Button size="icon" variant="outline" className="h-8 w-8" onClick={(e) => {
                         e.stopPropagation();
@@ -945,7 +945,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
           <Button variant="outline" size="sm" onClick={() => {
                 setVisibleCount((prev) => Math.min(prev + MEDIA_LIST_PAGE_SIZE, filteredTimeline.length));
             }}>
-            Load More ({formatNumberWithComma(Math.max(filteredTimeline.length - visibleCount, 0))} remaining)
+            Tải thêm / Load More ({formatNumberWithComma(Math.max(filteredTimeline.length - visibleCount, 0))} còn lại / remaining)
           </Button>
         </div>)}
 
@@ -978,7 +978,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
           <div className="flex items-center gap-4 mt-3 text-white/80 text-sm">
             {filteredTimeline[previewIndex].verified && (<span className="flex items-center gap-1 text-blue-400">
                 <BadgeCheck className="h-4 w-4"/>
-                Verified
+                Đã xác minh / Verified
               </span>)}
             {filteredTimeline[previewIndex].width > 0 && filteredTimeline[previewIndex].height > 0 && (<span className="flex items-center gap-1">
                 <Maximize2 className="h-4 w-4"/>
@@ -1001,7 +1001,7 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                 {formatNumber(filteredTimeline[previewIndex].bookmark_count)}
               </span>)}
             {filteredTimeline[previewIndex].source && (<span className="text-white/60">
-                via {filteredTimeline[previewIndex].source}
+                qua / via {filteredTimeline[previewIndex].source}
               </span>)}
           </div>
 
@@ -1015,12 +1015,12 @@ export function MediaList({ accountInfo, timeline, totalUrls, fetchedMediaType =
                         await handleDownloadItem(item, itemKey);
                     }} disabled={anyDownloadActive}>
                   {isItemDownloading ? (<Spinner className="mr-1"/>) : isItemSkipped ? (<FileCheck className="h-4 w-4 mr-1"/>) : isItemDownloaded ? (<CheckCircle className="h-4 w-4 mr-1"/>) : isItemFailed ? (<XCircle className="h-4 w-4 mr-1"/>) : (<Download className="h-4 w-4 mr-1"/>)}
-                  {isItemDownloading ? "Downloading..." : isItemSkipped ? "Already exists" : isItemDownloaded ? "Downloaded" : isItemFailed ? "Failed" : "Download"}
+                  {isItemDownloading ? "Đang tải... / Downloading..." : isItemSkipped ? "Đã tồn tại / Already exists" : isItemDownloaded ? "Đã tải / Downloaded" : isItemFailed ? "Lỗi / Failed" : "Tải / Download"}
                 </Button>);
             })()}
             <Button variant="secondary" size="sm" className="h-9" onClick={() => handleOpenTweet(filteredTimeline[previewIndex].tweet_id)}>
               <ExternalLink className="h-4 w-4 mr-1"/>
-              Open Tweet
+              Mở Tweet / Open Tweet
             </Button>
           </div>
 

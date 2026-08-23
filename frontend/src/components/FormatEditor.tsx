@@ -47,8 +47,8 @@ export function FormatEditor({ title, value, defaultValue, tokens, suffix, place
         </button>
       </div>
       <div className="rounded-lg border bg-muted/40 px-3 py-2">
-        <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Preview</div>
-        <div className="font-mono text-sm break-all">{preview || <span className="text-muted-foreground italic">empty</span>}</div>
+        <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Xem trước / Preview</div>
+        <div className="font-mono text-sm break-all">{preview || <span className="text-muted-foreground italic">trống / empty</span>}</div>
       </div>
       <div className="flex flex-wrap gap-2">
         {tokens.map((token) => (<Tooltip key={token.key}>

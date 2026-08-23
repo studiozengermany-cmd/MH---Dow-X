@@ -53,9 +53,9 @@ export function SupportPage() {
                   <img src={cryptoQr} className="h-32 w-32 object-contain" alt={`${selectedCoin.toUpperCase()} ${activeNetwork.label} QR code`}/>
                 </div>
               </div>
-              <h4 className="font-semibold text-foreground">Support via Crypto</h4>
+              <h4 className="font-semibold text-foreground">Ủng hộ qua Crypto / Support via Crypto</h4>
               <p className="px-4 text-center text-sm text-muted-foreground">
-                Scan the QR code or copy the address to support the project.
+                Quét mã QR hoặc sao chép địa chỉ để ủng hộ dự án. / Scan the QR code or copy the address to support the project.
               </p>
             </div>
             <div className="w-full space-y-2">

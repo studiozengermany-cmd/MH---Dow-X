@@ -1,9 +1,9 @@
-module twitterxmediabatchdownloader
+module mhdowx
 
 go 1.25.4
 
 require (
-	github.com/wailsapp/wails/v2 v2.13.0
+	github.com/wailsapp/wails/v2 v2.15.0
 	github.com/zalando/go-keyring v0.2.8
 	modernc.org/sqlite v1.56.0
 )

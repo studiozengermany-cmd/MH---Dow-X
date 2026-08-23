@@ -54,7 +54,7 @@ type sourceForgeRSSItem struct {
 
 func GetExifToolPath() string {
 	homeDir, _ := os.UserHomeDir()
-	baseDir := filepath.Join(homeDir, ".twitterxmediabatchdownloader")
+	baseDir := filepath.Join(homeDir, ".mh_dow_x")
 
 	switch runtime.GOOS {
 	case "windows":

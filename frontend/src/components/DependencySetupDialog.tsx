@@ -94,15 +94,15 @@ export function DependencySetupDialog({ onInstalled }: DependencySetupDialogProp
           <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-2xl border bg-muted/50">
             <Package className="h-6 w-6"/>
           </div>
-          <DialogTitle>{updateRequired ? "Update Xtractor" : "Download Xtractor"}</DialogTitle>
+          <DialogTitle>{updateRequired ? "Cập nhật Xtractor / Update Xtractor" : "Tải Xtractor / Download Xtractor"}</DialogTitle>
           <DialogDescription>
-            {updateRequired ? "A newer Xtractor binary is available or the installed version could not be verified." : "Xtractor is required before you can use this app."}
+            {updateRequired ? "Có phiên bản Xtractor mới hơn hoặc không thể xác minh phiên bản hiện tại. / A newer Xtractor binary is available or the installed version could not be verified." : "Cần có Xtractor để sử dụng ứng dụng này. / Xtractor is required before you can use this app."}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-3">
           {updateRequired && releaseVersion && (<p className="text-sm text-amber-600 dark:text-amber-400">
-              Installed: {installedVersion || "unknown"} - Latest: {releaseVersion}
+              Đã cài đặt / Installed: {installedVersion || "không rõ / unknown"} - Mới nhất / Latest: {releaseVersion}
             </p>)}
           <p className="text-sm text-muted-foreground">{releaseVersion ? `Latest GitHub release: ${releaseVersion}` : releaseStatusMessage}</p>
 
@@ -114,15 +114,15 @@ export function DependencySetupDialog({ onInstalled }: DependencySetupDialogProp
 
         <DialogFooter>
           <Button variant="outline" onClick={handleExit} disabled={downloading}>
-            Exit App
+            Thoát ứng dụng / Exit App
           </Button>
           <Button onClick={handleDownload} disabled={downloading}>
             {downloading ? (<>
                 <Spinner />
-                {updateRequired ? "Updating Xtractor..." : "Downloading Xtractor..."}
+                {updateRequired ? "Đang cập nhật Xtractor... / Updating Xtractor..." : "Đang tải Xtractor... / Downloading Xtractor..."}
               </>) : (<>
                 <Download className="h-4 w-4"/>
-                {updateRequired ? "Update Xtractor" : "Download Xtractor"}
+                {updateRequired ? "Cập nhật Xtractor / Update Xtractor" : "Tải Xtractor / Download Xtractor"}
               </>)}
           </Button>
         </DialogFooter>

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -80,7 +79,6 @@ interface SearchBarProps {
     onModeChange?: (mode: FetchMode, privateType?: PrivateType) => void;
 }
 export function SearchBar({ username, loading, onUsernameChange, onFetch, onStopFetch, onResume, onClearResume, resumeInfo, history, onHistorySelect, onHistoryRemove, hasResult, elapsedTime = 0, remainingTime = null, fetchType = "single", onFetchTypeChange, multipleAccounts = [], onImportAccounts, onFetchAll, onStopAll, onStopAccount, onRetryAccount, onClearMultipleAccounts, onRemoveMultipleAccount, onOpenSavedAccounts, isFetchingAll = false, mode: externalMode, privateType: externalPrivateType, onModeChange, }: SearchBarProps) {
-    const { t } = useTranslation();
     const [includePhotos, setIncludePhotos] = useState(getSettings().includePhotos);
     const [includeVideos, setIncludeVideos] = useState(getSettings().includeVideos);
     const [includeGifs, setIncludeGifs] = useState(getSettings().includeGifs);
@@ -280,11 +278,11 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
         : elapsedTime > 0
             ? formatTime(elapsedTime)
             : null;
-    const fetchingLabel = activeCountdown ? t('searchBar.fetchingCountdown', { time: activeCountdown }) : t('searchBar.fetching');
+    const fetchingLabel = activeCountdown ? `Fetching... (${activeCountdown})` : "Fetching...";
     const authTokenHelpText = mode === "private"
-        ? t('searchBar.authTokenHelpPrivate')
-        : t('searchBar.authTokenHelpPublic');
-    return (<div className="space-y-6">
+        ? "Use auth token from the account whose bookmarks or likes you want to fetch."
+        : "Recommended to use a dummy account, not your main account. Excessive usage may cause suspension.";
+    return (<div className="space-y-3">
 
       <div className="flex justify-center gap-2">
         <div className="flex w-fit gap-0.5 rounded-lg bg-muted p-0.5">
@@ -292,13 +290,13 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
             ? "bg-background text-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground")}>
             <User className="h-3 w-3"/>
-            {t('searchBar.single')}
+            Single
           </button>
           <button type="button" onClick={() => onFetchTypeChange?.("multiple")} className={cn("flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition-all", fetchType === "multiple"
             ? "bg-background text-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground")}>
             <Users className="h-3 w-3"/>
-            {t('searchBar.multiple')}
+            Multiple
           </button>
         </div>
 
@@ -309,7 +307,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                 ? "bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground")}>
               <Globe className="h-3 w-3"/>
-              {t('searchBar.public')}
+              Public
             </button>
             <button type="button" onClick={() => {
                 onModeChange?.("private");
@@ -317,21 +315,21 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                 ? "bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground")}>
               <Lock className="h-3 w-3"/>
-              {t('searchBar.private')}
+              Private
             </button>
           </div>)}
       </div>
 
       {fetchType === "multiple" && (<div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label className="text-sm">{t('searchBar.accountList')}</Label>
+            <Label className="text-sm">Account List</Label>
             <Tooltip>
               <TooltipTrigger asChild>
                 <CircleQuestionMark className="h-4 w-4 cursor-help text-muted-foreground"/>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
                 <p className="text-sm">
-                  {t('searchBar.accountListHelp')}
+                  One username or URL per line. Commas and semicolons are supported too.
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -340,13 +338,13 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
           <div className="flex flex-wrap items-center justify-between gap-2">
             <Button variant="outline" onClick={openImportDialog} disabled={isFetchingAll} className="flex w-64 items-center justify-center gap-2">
               <Users className="h-4 w-4"/>
-              {t('searchBar.inputAccountList')}
+              Input Account List
             </Button>
 
             <div className="ml-auto flex items-center gap-2">
               {isFetchingAll && (<Button variant="destructive" onClick={onStopAll} className="w-28">
                   <StopCircle className="h-4 w-4"/>
-                  {t('searchBar.stopAll')}
+                  Stop All
                 </Button>)}
 
               <Tooltip>
@@ -355,16 +353,16 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                     <SlidersHorizontal className="h-4 w-4"/>
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>{t('searchBar.fetchSettings')}</TooltipContent>
+                <TooltipContent>Fetch Settings</TooltipContent>
               </Tooltip>
 
               <Button variant="default" onClick={handleFetchAll} disabled={multipleAccounts.length === 0 || isFetchingAll} className="flex w-36 items-center justify-center gap-2">
                 {isFetchingAll ? (<>
                     <Spinner />
-                    {t('searchBar.fetchingAll')}
+                    Fetching All...
                   </>) : (<>
-                    <CloudDownload className="h-4 w-4 mr-1.5"/>
-                    {t('searchBar.fetchAll')}
+                    <CloudDownload className="h-4 w-4"/>
+                    Fetch All
                   </>)}
               </Button>
             </div>
@@ -372,13 +370,13 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
         </div>)}
 
       {fetchType === "single" && (mode === "public" || isLikesMode) && (<div className="space-y-2">
-          <Label htmlFor="username">{t('searchBar.urlOrUsername')}</Label>
+          <Label htmlFor="username">X/Twitter URL or Username</Label>
 
           <div className="flex gap-2">
             <div className="relative flex-1">
               <InputWithContext id="username" placeholder={isLikesMode
-                ? t('searchBar.placeholderLikes')
-                : t('searchBar.placeholder')} value={username} onChange={(e) => onUsernameChange(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleFetch()} className="pr-8"/>
+                ? "your_username or @your_username or https://x.com/your_username"
+                : "masteraoko or @masteraoko or https://x.com/masteraoko"} value={username} onChange={(e) => onUsernameChange(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleFetch()} className="pr-8"/>
               {username && (<button type="button" className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer text-muted-foreground transition-colors hover:text-foreground" onClick={() => onUsernameChange("")}>
                   <XCircle className="h-4 w-4"/>
                 </button>)}
@@ -391,7 +389,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
             <div className="flex items-center gap-2">
               {loading && (<Button variant="destructive" onClick={onStopFetch}>
                   <StopCircle className="h-4 w-4"/>
-                  {t('searchBar.stop')}
+                  Stop
                 </Button>)}
 
               {!loading && resumeInfo?.canResume && mode === "public" && (<>
@@ -401,12 +399,12 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                         <Trash2 className="h-4 w-4"/>
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>{t('searchBar.clearResume')}</TooltipContent>
+                    <TooltipContent>Clear Resume</TooltipContent>
                   </Tooltip>
 
                   <Button variant="secondary" onClick={handleResume}>
                     <RotateCcw className="h-4 w-4"/>
-                    {t('searchBar.resume', { count: resumeInfo.mediaCount.toLocaleString() })}
+                    Resume ({resumeInfo.mediaCount.toLocaleString()})
                   </Button>
                 </>)}
 
@@ -416,7 +414,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                     <SlidersHorizontal className="h-4 w-4"/>
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>{t('searchBar.fetchSettings')}</TooltipContent>
+                <TooltipContent>Fetch Settings</TooltipContent>
               </Tooltip>
 
               <Button onClick={handleFetch} disabled={loading}>
@@ -425,7 +423,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                     {fetchingLabel}
                   </>) : (<>
                     {isLikesMode ? <Heart className="h-4 w-4"/> : <CloudDownload className="h-4 w-4"/>}
-                    {isLikesMode ? t('searchBar.fetchLikes') : t('searchBar.fetch')}
+                    {isLikesMode ? "Fetch Likes" : "Fetch"}
                   </>)}
               </Button>
             </div>
@@ -440,7 +438,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                 ? "border-primary bg-primary/10 text-primary"
                 : "border-border hover:border-primary/50")}>
               <Bookmark className="h-4 w-4"/>
-              {t('searchBar.myBookmarks')}
+              My Bookmarks
             </button>
 
             <button type="button" onClick={() => {
@@ -449,14 +447,14 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                 ? "border-primary bg-primary/10 text-primary"
                 : "border-border hover:border-primary/50")}>
               <Heart className="h-4 w-4"/>
-              {t('searchBar.myLikes')}
+              My Likes
             </button>
           </>)}
 
         {fetchType === "single" && isBookmarksMode && (<div className="ml-auto flex items-center gap-2">
             {loading && (<Button variant="destructive" onClick={onStopFetch}>
                 <StopCircle className="h-4 w-4"/>
-                {t('searchBar.stop')}
+                Stop
               </Button>)}
 
             <Tooltip>
@@ -465,7 +463,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                   <SlidersHorizontal className="h-4 w-4"/>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>{t('searchBar.fetchSettings')}</TooltipContent>
+              <TooltipContent>Fetch Settings</TooltipContent>
             </Tooltip>
 
             <Button onClick={handleFetch} disabled={loading}>
@@ -474,7 +472,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                   {fetchingLabel}
                 </>) : (<>
                   <Bookmark className="h-4 w-4"/>
-                  {t('searchBar.fetchBookmarks')}
+                  Fetch Bookmarks
                 </>)}
             </Button>
           </div>)}
@@ -484,7 +482,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
           <div className="flex items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400"/>
-              <span className="text-muted-foreground">{t('searchBar.completed')}:</span>
+              <span className="text-muted-foreground">Completed:</span>
               <span className="font-medium">
                 {formatNumberWithComma(multipleAccounts.filter((acc) => acc.status === "completed").length)}
               </span>
@@ -492,7 +490,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
 
             <div className="flex items-center gap-2">
               <AlertCircle className="h-4 w-4 text-yellow-600 dark:text-yellow-400"/>
-              <span className="text-muted-foreground">{t('searchBar.incomplete')}:</span>
+              <span className="text-muted-foreground">Incomplete:</span>
               <span className="font-medium">
                 {formatNumberWithComma(multipleAccounts.filter((acc) => acc.status === "incomplete").length)}
               </span>
@@ -500,7 +498,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
 
             <div className="flex items-center gap-2">
               <XCircle className="h-4 w-4 text-red-600 dark:text-red-400"/>
-              <span className="text-muted-foreground">{t('searchBar.failed')}:</span>
+              <span className="text-muted-foreground">Failed:</span>
               <span className="font-medium">
                 {formatNumberWithComma(multipleAccounts.filter((acc) => acc.status === "failed").length)}
               </span>
@@ -508,14 +506,14 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
 
             <div className="ml-auto flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-muted-foreground">{t('searchBar.total')}:</span>
+                <span className="text-muted-foreground">Total:</span>
                 <span className="font-medium">
                   {formatNumberWithComma(multipleAccounts.filter((acc) => acc.status === "completed" || acc.status === "incomplete" || acc.status === "failed").length)}/{formatNumberWithComma(multipleAccounts.length)}
                 </span>
               </div>
               {!isFetchingAll && onOpenSavedAccounts && multipleAccounts.some((acc) => acc.status === "completed" || acc.status === "incomplete") && (<Button variant="secondary" size="sm" onClick={onOpenSavedAccounts} className="flex items-center gap-2">
                   <Database className="h-3.5 w-3.5"/>
-                  {t('searchBar.openSavedAccounts')}
+                  Open Saved Accounts to Download
                 </Button>)}
             </div>
           </div>
@@ -523,10 +521,10 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
 
       {fetchType === "multiple" && multipleAccounts.length > 0 && (<div className="space-y-2">
           <div className="flex items-center justify-between gap-2">
-            <p className="text-sm text-muted-foreground">{t('searchBar.accountsToFetch', { count: formatNumberWithComma(multipleAccounts.length) })}</p>
+            <p className="text-sm text-muted-foreground">Accounts to Fetch ({formatNumberWithComma(multipleAccounts.length)})</p>
             <Button variant="outline" size="sm" onClick={onClearMultipleAccounts} disabled={isFetchingAll || isAnyMultipleAccountFetching} className="flex items-center gap-2">
               <Trash2 className="h-4 w-4"/>
-              {t('searchBar.clearList')}
+              Clear List
             </Button>
           </div>
           <div className="max-h-100 space-y-2 overflow-y-auto">
@@ -544,7 +542,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                         </div>
                         <div className="mt-1 flex items-center gap-2">
                           <span className="text-sm text-muted-foreground">
-                            <span className="text-primary">{account.mediaCount.toLocaleString()}</span> {t('searchBar.itemsFound')}
+                            <span className="text-primary">{account.mediaCount.toLocaleString()}</span> items found
                           </span>
                           {account.showDiff && account.previousMediaCount > 0 && account.mediaCount > account.previousMediaCount && (<span className="text-sm font-medium text-green-600 dark:text-green-400">
                               +{account.mediaCount - account.previousMediaCount}
@@ -614,19 +612,6 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
         </div>)}
 
       {!hasResult && mode === "public" && fetchType === "single" && (<FetchHistory history={history} onSelect={onHistorySelect} onRemove={onHistoryRemove}/>)}
-
-      {hasResult && fetchType === "single" && (<div className="mt-4 flex items-center justify-between rounded-lg border bg-card p-4">
-          <div className="space-y-1">
-            <h3 className="font-medium leading-none">{t('searchBar.viewMedia')}</h3>
-            <p className="text-sm text-muted-foreground">
-              {t('searchBar.viewMediaDesc')}
-            </p>
-          </div>
-          <Button variant="secondary" onClick={onOpenSavedAccounts} className="gap-2">
-            <Database className="h-4 w-4"/>
-            {t('searchBar.openSavedAccounts')}
-          </Button>
-        </div>)}
 
       <Dialog open={showImportDialog} onOpenChange={setShowImportDialog}>
         <DialogContent className="sm:max-w-xl">
@@ -709,13 +694,13 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
       <Dialog open={showSettingsDialog} onOpenChange={setShowSettingsDialog}>
         <DialogContent className="sm:max-w-xl max-h-[85vh] flex flex-col overflow-hidden">
           <DialogHeader>
-            <DialogTitle>{t('searchBar.fetchSettings')}</DialogTitle>
+            <DialogTitle>Fetch Settings</DialogTitle>
           </DialogHeader>
 
           <div className="space-y-4 overflow-y-auto flex-1 min-h-0 -mx-2 px-2">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Label htmlFor="shared-auth-token" className="text-sm">{t('searchBar.authToken')}</Label>
+                <Label htmlFor="shared-auth-token" className="text-sm">Auth Token</Label>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <CircleQuestionMark className="h-4 w-4 cursor-help text-muted-foreground"/>
@@ -726,12 +711,12 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
                 </Tooltip>
               </div>
 
-              <InputWithContext id="shared-auth-token" type="text" placeholder={t('searchBar.authTokenPlaceholder')} value={sharedAuthToken} onChange={(e) => void handleSharedTokenChange(e.target.value)}/>
+              <InputWithContext id="shared-auth-token" type="text" placeholder="Enter your auth_token cookie value" value={sharedAuthToken} onChange={(e) => void handleSharedTokenChange(e.target.value)}/>
 
             </div>
 
             {fetchType === "single" && (<div className="flex items-center justify-between gap-4">
-              <Label htmlFor="retweets" className="cursor-pointer text-sm">{t('searchBar.includeReposts')}</Label>
+              <Label htmlFor="retweets" className="cursor-pointer text-sm">Include Reposts</Label>
               <Checkbox id="retweets" checked={retweets} onCheckedChange={(checked) => {
                 const value = checked as boolean;
                 updateSettings({ includeRetweets: value });
@@ -740,38 +725,38 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
             </div>)}
 
             <div className="space-y-2">
-              <Label className="text-sm">{t('searchBar.includeMedia')}</Label>
+              <Label className="text-sm">Include Media</Label>
               <div className="grid grid-cols-4 gap-2">
-                <button type="button" className={pillClass(includePhotos)} onClick={() => { updateSettings({ includePhotos: !includePhotos }); setIncludePhotos((v) => !v); }}>{t('searchBar.photos')}</button>
-                <button type="button" className={pillClass(includeVideos)} onClick={() => { updateSettings({ includeVideos: !includeVideos }); setIncludeVideos((v) => !v); }}>{t('searchBar.videos')}</button>
-                <button type="button" className={pillClass(includeGifs)} onClick={() => { updateSettings({ includeGifs: !includeGifs }); setIncludeGifs((v) => !v); }}>{t('searchBar.gifs')}</button>
-                <button type="button" className={pillClass(includeText)} onClick={() => { updateSettings({ includeText: !includeText }); setIncludeText((v) => !v); }}>{t('searchBar.text')}</button>
+                <button type="button" className={pillClass(includePhotos)} onClick={() => { updateSettings({ includePhotos: !includePhotos }); setIncludePhotos((v) => !v); }}>Photos</button>
+                <button type="button" className={pillClass(includeVideos)} onClick={() => { updateSettings({ includeVideos: !includeVideos }); setIncludeVideos((v) => !v); }}>Videos</button>
+                <button type="button" className={pillClass(includeGifs)} onClick={() => { updateSettings({ includeGifs: !includeGifs }); setIncludeGifs((v) => !v); }}>GIFs</button>
+                <button type="button" className={pillClass(includeText)} onClick={() => { updateSettings({ includeText: !includeText }); setIncludeText((v) => !v); }}>Text</button>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm">{t('searchBar.videoQuality')}</Label>
+              <Label className="text-sm">Video Quality</Label>
               <div className="grid grid-cols-5 gap-2">
                 {VIDEO_QUALITIES.map((q) => (<button key={q.value} type="button" className={pillClass(videoQuality === q.value)} onClick={() => { updateSettings({ videoQuality: q.value }); setVideoQuality(q.value); }}>{q.label}</button>))}
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm">{t('searchBar.imageSize')}</Label>
+              <Label className="text-sm">Image Size</Label>
               <div className="grid grid-cols-4 gap-2">
                 {IMAGE_SIZES.map((s) => (<button key={s.value} type="button" className={pillClass(imageSize === s.value)} onClick={() => { updateSettings({ imageSize: s.value }); setImageSize(s.value); }}>{s.label}</button>))}
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm">{t('searchBar.avatarSize')}</Label>
+              <Label className="text-sm">Avatar Size</Label>
               <div className="grid grid-cols-5 gap-2">
                 {AVATAR_SIZES.map((s) => (<button key={s.value} type="button" className={pillClass(avatarSize === s.value)} onClick={() => { updateSettings({ avatarSize: s.value }); setAvatarSize(s.value); }}>{s.label}</button>))}
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-sm">{t('searchBar.bannerSize')}</Label>
+              <Label className="text-sm">Banner Size</Label>
               <div className="grid grid-cols-4 gap-2">
                 {BANNER_SIZES.map((s) => (<button key={s.value} type="button" className={pillClass(bannerSize === s.value)} onClick={() => { updateSettings({ bannerSize: s.value }); setBannerSize(s.value); }}>{s.label}</button>))}
               </div>
@@ -779,7 +764,7 @@ export function SearchBar({ username, loading, onUsernameChange, onFetch, onStop
           </div>
 
           <DialogFooter>
-            <Button onClick={() => setShowSettingsDialog(false)}>{t('searchBar.done')}</Button>
+            <Button onClick={() => setShowSettingsDialog(false)}>Done</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -76,7 +76,7 @@ func GetDBPath() string {
 	if err != nil {
 		homeDir = "."
 	}
-	return filepath.Join(homeDir, ".twitterxmediabatchdownloader", "accounts.db")
+	return filepath.Join(homeDir, ".mh_dow_x", "accounts.db")
 }
 
 func InitDB() error {
@@ -531,7 +531,7 @@ func ExportAccountToFile(id int64, outputDir string) (string, error) {
 		return "", err
 	}
 
-	exportDir := filepath.Join(outputDir, "twitterxmediabatchdownloader_backups")
+	exportDir := filepath.Join(outputDir, .mh_dow_x_backups")
 	if err := os.MkdirAll(exportDir, 0755); err != nil {
 		return "", err
 	}
@@ -555,7 +555,7 @@ func ExportAccountsToTXT(ids []int64, outputDir string) (string, error) {
 		return "", fmt.Errorf("no accounts to export")
 	}
 
-	exportDir := filepath.Join(outputDir, "twitterxmediabatchdownloader_backups")
+	exportDir := filepath.Join(outputDir, .mh_dow_x_backups")
 	if err := os.MkdirAll(exportDir, 0755); err != nil {
 		return "", err
 	}
@@ -577,7 +577,7 @@ func ExportAccountsToTXT(ids []int64, outputDir string) (string, error) {
 
 	txtContent := strings.Join(usernames, "\n")
 
-	filePath := filepath.Join(exportDir, "twitterxmediabatchdownloader_multiple.txt")
+	filePath := filepath.Join(exportDir, .mh_dow_x_multiple.txt")
 
 	if err := os.WriteFile(filePath, []byte(txtContent), 0644); err != nil {
 		return "", err

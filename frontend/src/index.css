@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -291,4 +292,35 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   filter: brightness(1.2);
+}
+
+/* 3D Glowing Brand & Button Animations */
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-glow {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+@keyframes text-3d-float {
+  0%   { transform: perspective(400px) rotateX(0deg)  rotateY(-3deg); }
+  25%  { transform: perspective(400px) rotateX(2deg)  rotateY(0deg); }
+  50%  { transform: perspective(400px) rotateX(0deg)  rotateY(3deg); }
+  75%  { transform: perspective(400px) rotateX(-2deg) rotateY(0deg); }
+  100% { transform: perspective(400px) rotateX(0deg)  rotateY(-3deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.04); }
+}
+
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }

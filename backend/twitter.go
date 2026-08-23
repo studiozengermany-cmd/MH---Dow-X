@@ -912,6 +912,6 @@ func ExtractDateRange(req DateRangeRequest) (*TwitterResponse, error) {
 
 func getExtractorPath() string {
 	homeDir, _ := os.UserHomeDir()
-	baseDir := filepath.Join(homeDir, ".twitterxmediabatchdownloader")
+	baseDir := filepath.Join(homeDir, ".mh_dow_x")
 	return filepath.Join(baseDir, getExecutableName())
 }

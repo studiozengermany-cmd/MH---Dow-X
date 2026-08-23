@@ -1554,17 +1554,17 @@ function App() {
         <Dialog open={showUpdateDialog} onOpenChange={setShowUpdateDialog}>
           <DialogContent className="sm:max-w-125 [&>button]:hidden">
             <DialogHeader>
-              <DialogTitle>Cập nhật có sẵn / Update Available</DialogTitle>
+              <DialogTitle>Update Available</DialogTitle>
               <DialogDescription>
-                Đã có phiên bản mới (v{updateInfo?.version || ""}). Bạn đang sử dụng v{CURRENT_VERSION} / A new version (v{updateInfo?.version || ""}) is available. You're on v{CURRENT_VERSION}
+                A new version (v{updateInfo?.version || ""}) is available. You're on v{CURRENT_VERSION}
               </DialogDescription>
             </DialogHeader>
             {updateInfo?.changelog ? (<div className="custom-scrollbar max-h-72 overflow-y-auto rounded-md border bg-muted/40 p-3">
                 <MarkdownLite content={updateInfo.changelog}/>
-              </div>) : (<p className="text-sm text-muted-foreground">Không có chi tiết cập nhật (changelog) cho phiên bản này. / No changelog was provided for this release.</p>)}
+              </div>) : (<p className="text-sm text-muted-foreground">No changelog was provided for this release.</p>)}
             <DialogFooter className="gap-2">
               <Button variant="outline" onClick={() => setShowUpdateDialog(false)}>
-                Tải sau / Download Later
+                Download Later
               </Button>
               <Button onClick={() => {
             if (updateInfo) {
@@ -1572,7 +1572,7 @@ function App() {
             }
             setShowUpdateDialog(false);
         }}>
-                Tải ngay / Download Now
+                Download Now
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -1587,17 +1587,17 @@ function App() {
         }}>
           <DialogContent className="sm:max-w-106.25 [&>button]:hidden">
             <DialogHeader>
-              <DialogTitle>Những thay đổi chưa được lưu / Unsaved Changes</DialogTitle>
+              <DialogTitle>Unsaved Changes</DialogTitle>
               <DialogDescription>
-                Bạn có những thay đổi chưa lưu trong phần Cài đặt. Nếu bạn rời khỏi trang bây giờ, tất cả thay đổi sẽ bị mất. / You have unsaved changes in Settings. If you leave now, your changes will be lost.
+                You have unsaved changes in Settings. If you leave now, your changes will be lost.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button variant="outline" onClick={handleCancelNavigation}>
-                Hủy / Cancel
+                Cancel
               </Button>
               <Button variant="destructive" onClick={handleDiscardChanges}>
-                Hủy bỏ thay đổi / Discard Changes
+                Discard Changes
               </Button>
             </DialogFooter>
           </DialogContent>

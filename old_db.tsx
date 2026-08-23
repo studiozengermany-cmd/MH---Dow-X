@@ -789,20 +789,20 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
     return (<div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl font-bold">Tài khoản đã lưu / Saved Accounts</h2>
+          <h2 className="text-2xl font-bold">Saved Accounts</h2>
           
           <div className="flex gap-0.5 p-0.5 bg-muted rounded-lg">
             <button type="button" onClick={() => setAccountViewMode("public")} className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all ${accountViewMode === "public"
             ? "bg-background text-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground"}`}>
               <Globe className="h-3 w-3"/>
-              Công khai / Public ({formatNumberWithComma(publicAccounts.length)})
+              Public ({formatNumberWithComma(publicAccounts.length)})
             </button>
             <button type="button" onClick={() => setAccountViewMode("private")} className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all ${accountViewMode === "private"
             ? "bg-background text-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground"}`}>
               <Lock className="h-3 w-3"/>
-              Riêng tư / Private ({formatNumberWithComma(privateAccounts.length)})
+              Private ({formatNumberWithComma(privateAccounts.length)})
             </button>
           </div>
         </div>
@@ -813,7 +813,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                 <FileInput className="h-4 w-4"/>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Nhập JSON / Import JSON</TooltipContent>
+            <TooltipContent>Import JSON</TooltipContent>
           </Tooltip>
           <DropdownMenu>
             <Tooltip>
@@ -824,16 +824,16 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                   </Button>
                 </DropdownMenuTrigger>
               </TooltipTrigger>
-              <TooltipContent>Xuất dữ liệu đã chọn / Export Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
+              <TooltipContent>Export Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportJSON}>
                 <FileBraces className="h-4 w-4 mr-2"/>
-                Xuất JSON / Export JSON
+                Export JSON
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportTXT} disabled={hasPrivateAccountSelected()}>
                 <FileText className="h-4 w-4 mr-2"/>
-                Xuất TXT / Export TXT
+                Export TXT
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -843,7 +843,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                 <Tag className="h-4 w-4"/>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Sửa nhóm / Edit Group ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
+            <TooltipContent>Edit Group for Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -871,7 +871,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                 <CloudBackup className="h-4 w-4"/>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Cập nhật tài khoản / Update Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
+            <TooltipContent>Update Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
           </Tooltip>
           {isBulkDownloading ? (<Tooltip>
               <TooltipTrigger asChild>
@@ -879,14 +879,14 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                   <StopCircle className="h-4 w-4 text-destructive"/>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Dừng tải / Stop Bulk Download</TooltipContent>
+              <TooltipContent>Stop Bulk Download</TooltipContent>
             </Tooltip>) : (<Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="default" size="icon" onClick={handleBulkDownload} disabled={selectedIds.size === 0 || isDownloading}>
                   <Download className="h-4 w-4"/>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Tải Media / Download Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
+              <TooltipContent>Download Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
             </Tooltip>)}
           <Dialog open={clearAllDialogOpen} onOpenChange={setClearAllDialogOpen}>
             <Tooltip>
@@ -897,7 +897,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                   </Button>
                 </DialogTrigger>
               </TooltipTrigger>
-              <TooltipContent>Xóa các mục đã chọn / Delete Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
+              <TooltipContent>Delete Selected ({formatNumberWithComma(selectedIds.size)})</TooltipContent>
             </Tooltip>
             <DialogContent className="[&>button]:hidden">
               <div className="absolute right-4 top-4">
@@ -936,22 +936,22 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
         </div>
       </div>
 
-      {loading ? (<div className="text-center py-12 text-muted-foreground">Đang tải... / Loading...</div>) : accounts.length === 0 ? (<div className="text-center py-12 text-muted-foreground">
-          Chưa có tài khoản nào được lưu. Hãy tải media của một người dùng để lưu vào đây. / No saved accounts yet. Fetch a user's media to save it here.
+      {loading ? (<div className="text-center py-12 text-muted-foreground">Loading...</div>) : accounts.length === 0 ? (<div className="text-center py-12 text-muted-foreground">
+          No saved accounts yet. Fetch a user's media to save it here.
         </div>) : (<div className="space-y-2">
           
           <div className="flex items-center gap-4 py-2">
             <div className="flex items-center gap-2">
               <Checkbox checked={selectedIds.size === filteredAccounts.length && filteredAccounts.length > 0} onCheckedChange={toggleSelectAll}/>
               <span className="text-sm text-muted-foreground">
-                Chọn tất cả / Select all {selectedIds.size > 0 && `(${formatNumberWithComma(selectedIds.size)} đã chọn / selected)`}
+                Select all {selectedIds.size > 0 && `(${formatNumberWithComma(selectedIds.size)} selected)`}
               </span>
             </div>
             
             
             {accountViewMode === "public" && (<div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
-                <Input placeholder="Tìm kiếm... / Search..." value={searchQuery} onChange={(e) => {
+                <Input placeholder="Search..." value={searchQuery} onChange={(e) => {
                     setSearchQuery(e.target.value);
                 }} className="pl-9 h-9"/>
                 {searchQuery && (<button type="button" onClick={() => {
@@ -968,19 +968,19 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
             {accountViewMode === "public" && (<Select value={sortOrder} onValueChange={(v) => setSortOrder(v as typeof sortOrder)}>
                 <SelectTrigger className="w-auto">
                   <ArrowUpDown className="h-4 w-4 mr-2"/>
-                  <SelectValue placeholder="Sắp xếp / Sort"/>
+                  <SelectValue placeholder="Sort"/>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="newest">Mới nhất / Newest</SelectItem>
-                  <SelectItem value="oldest">Cũ nhất / Oldest</SelectItem>
-                  <SelectItem value="username-asc">Tên (A-Z) / Username (A-Z)</SelectItem>
-                  <SelectItem value="username-desc">Tên (Z-A) / Username (Z-A)</SelectItem>
-                  <SelectItem value="followers-high">Người theo dõi (Cao-Thấp) / Followers (High-Low)</SelectItem>
-                  <SelectItem value="followers-low">Người theo dõi (Thấp-Cao) / Followers (Low-High)</SelectItem>
-                  <SelectItem value="posts-high">Bài viết (Cao-Thấp) / Posts (High-Low)</SelectItem>
-                  <SelectItem value="posts-low">Bài viết (Thấp-Cao) / Posts (Low-High)</SelectItem>
-                  <SelectItem value="media-high">Số Media (Cao-Thấp) / Media (High-Low)</SelectItem>
-                  <SelectItem value="media-low">Số Media (Thấp-Cao) / Media (Low-High)</SelectItem>
+                  <SelectItem value="newest">Newest</SelectItem>
+                  <SelectItem value="oldest">Oldest</SelectItem>
+                  <SelectItem value="username-asc">Username (A-Z)</SelectItem>
+                  <SelectItem value="username-desc">Username (Z-A)</SelectItem>
+                  <SelectItem value="followers-high">Followers (High-Low)</SelectItem>
+                  <SelectItem value="followers-low">Followers (Low-High)</SelectItem>
+                  <SelectItem value="posts-high">Posts (High-Low)</SelectItem>
+                  <SelectItem value="posts-low">Posts (Low-High)</SelectItem>
+                  <SelectItem value="media-high">Media Count (High-Low)</SelectItem>
+                  <SelectItem value="media-low">Media Count (Low-High)</SelectItem>
                 </SelectContent>
               </Select>)}
             
@@ -1031,11 +1031,11 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
             {accountViewMode === "public" && (<Select value={filterGroup} onValueChange={setFilterGroup} disabled={groups.length === 0}>
                 <SelectTrigger className="w-auto">
                   <Tag className="h-4 w-4 mr-2"/>
-                  <SelectValue placeholder="Lọc theo nhóm / Filter by group"/>
+                  <SelectValue placeholder="Filter by group"/>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tất cả nhóm / All Groups</SelectItem>
-                  <SelectItem value="ungrouped">Chưa phân nhóm / Ungrouped</SelectItem>
+                  <SelectItem value="all">All Groups</SelectItem>
+                  <SelectItem value="ungrouped">Ungrouped</SelectItem>
                   {groups.map((group) => (<SelectItem key={group.name} value={group.name}>
                       <span className="flex items-center gap-2">
                         <span className="w-3 h-3 rounded-full" style={{ backgroundColor: group.color }}/>
@@ -1065,7 +1065,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
           {isBulkDownloading && (<div className="px-4 py-3 bg-muted/50 rounded-lg space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">
-                  Đang tải tài khoản / Downloading account {bulkDownloadCurrent} / {bulkDownloadTotal}
+                  Downloading account {bulkDownloadCurrent} of {bulkDownloadTotal}
                 </span>
                 <span className="font-medium">{Math.round((bulkDownloadCurrent / bulkDownloadTotal) * 100)}%</span>
               </div>
@@ -1131,7 +1131,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                             handleEditGroup(account);
                         }}>
                               <Pencil className="h-4 w-4 mr-2"/>
-                              Sửa nhóm / Edit Group
+                              Edit Group
                             </DropdownMenuItem>)}
                           <DropdownMenuItem onClick={async () => {
                         const settings = getSettings();
@@ -1146,11 +1146,11 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                         }
                     }}>
                             <FileOutput className="h-4 w-4 mr-2"/>
-                            Xuất JSON / Export JSON
+                            Export JSON
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleDelete(account.id, account.username)} className="text-destructive focus:text-destructive">
                             <Trash2 className="h-4 w-4 mr-2"/>
-                            Xóa / Delete
+                            Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -1228,7 +1228,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                             handleEditGroup(account);
                         }}>
                               <Pencil className="h-4 w-4 mr-2"/>
-                              Sửa nhóm / Edit Group
+                              Edit Group
                             </DropdownMenuItem>)}
                           <DropdownMenuItem onClick={async () => {
                         const settings = getSettings();
@@ -1243,11 +1243,11 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                         }
                     }}>
                             <FileOutput className="h-4 w-4 mr-2"/>
-                            Xuất JSON / Export JSON
+                            Export JSON
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleDelete(account.id, account.username)} className="text-destructive focus:text-destructive">
                             <Trash2 className="h-4 w-4 mr-2"/>
-                            Xóa / Delete
+                            Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -1328,14 +1328,14 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                           <StopCircle className="h-4 w-4 text-destructive"/>
                         </Button>
                       </TooltipTrigger>
-                      <TooltipContent>Dừng tải / Stop Download</TooltipContent>
+                      <TooltipContent>Stop Download</TooltipContent>
                     </Tooltip>) : (<Tooltip>
                       <TooltipTrigger asChild>
                         <Button variant="default" size="icon" onClick={() => handleDownload(account.id, account.username)} disabled={isDownloading}>
                           {isDownloading && downloadingAccountId === account.id ? (<Spinner className="h-4 w-4"/>) : (<Download className="h-4 w-4"/>)}
                         </Button>
                       </TooltipTrigger>
-                      <TooltipContent>Tải tất cả Media / Download All Media</TooltipContent>
+                      <TooltipContent>Download All Media</TooltipContent>
                     </Tooltip>)}
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -1343,7 +1343,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                         <FolderOpen className="h-4 w-4"/>
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>Mới thư mục / Open Folder</TooltipContent>
+                    <TooltipContent>Open Folder</TooltipContent>
                   </Tooltip>
                   <DropdownMenu>
                     <Tooltip>
@@ -1354,7 +1354,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                           </Button>
                         </DropdownMenuTrigger>
                       </TooltipTrigger>
-                      <TooltipContent>Tùy chọn khác / More Options</TooltipContent>
+                      <TooltipContent>More Options</TooltipContent>
                     </Tooltip>
                     <DropdownMenuContent align="end">
                       {!isPrivateAccount(account.username) && (<DropdownMenuItem onSelect={(event) => {
@@ -1362,7 +1362,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                         handleEditGroup(account);
                     }}>
                           <Pencil className="h-4 w-4 mr-2"/>
-                          Sửa nhóm / Edit Group
+                          Edit Group
                         </DropdownMenuItem>)}
                       <DropdownMenuItem onClick={async () => {
                     const settings = getSettings();
@@ -1377,7 +1377,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                     }
                 }}>
                         <FileOutput className="h-4 w-4 mr-2"/>
-                        Xuất JSON / Export JSON
+                        Export JSON
                       </DropdownMenuItem>
                       <Dialog>
                         <DialogTrigger asChild>
@@ -1385,7 +1385,7 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                     e.preventDefault();
                 }} className="text-destructive focus:text-destructive">
                             <Trash2 className="h-4 w-4 mr-2"/>
-                            Xóa / Delete
+                            Delete
                           </DropdownMenuItem>
                         </DialogTrigger>
                         <DialogContent className="[&>button]:hidden">
@@ -1397,14 +1397,14 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                             </DialogTrigger>
                           </div>
                           <DialogHeader>
-                            <DialogTitle>Xóa @{account.username}? / Delete @{account.username}?</DialogTitle>
+                            <DialogTitle>Delete @{account.username}?</DialogTitle>
                             <DialogDescription>
-                              Hành động này sẽ xóa vĩnh viễn dữ liệu đã lưu cho tài khoản này. / This will permanently delete the saved data for this account.
+                              This will permanently delete the saved data for this account.
                             </DialogDescription>
                           </DialogHeader>
                           <DialogFooter>
                             <Button variant="destructive" onClick={() => handleDelete(account.id, account.username)}>
-                              Xóa / Delete
+                              Delete
                             </Button>
                           </DialogFooter>
                         </DialogContent>
@@ -1446,15 +1446,15 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
           </div>
           <DialogHeader>
             <DialogTitle>{isBulkGroupEditing
-            ? `Sửa nhóm cho ${formatNumberWithComma(selectedIds.size)} tài khoản đã chọn / Edit Group for ${formatNumberWithComma(selectedIds.size)} Selected Accounts`
-            : `Sửa nhóm cho @${editingAccount?.username} / Edit Group for @${editingAccount?.username}`}</DialogTitle>
+            ? `Edit Group for ${formatNumberWithComma(selectedIds.size)} Selected Accounts`
+            : `Edit Group for @${editingAccount?.username}`}</DialogTitle>
             <DialogDescription>
-              {isBulkGroupEditing ? "Gán các tài khoản này" : "Gán tài khoản này"} vào một nhóm để quản lý tốt hơn. / Assign {isBulkGroupEditing ? "these accounts" : "this account"} to a group for better organization.
+              Assign {isBulkGroupEditing ? "these accounts" : "this account"} to a group for better organization.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="groupName">Tên nhóm / Group Name</Label>
+              <Label htmlFor="groupName">Group Name</Label>
               <div className="flex items-center gap-2">
                 <Input id="groupName" placeholder="e.g., Artists, Photographers, Friends" value={editGroupName} onChange={(e) => setEditGroupName(e.target.value)} className="flex-1"/>
                 {groups.length > 0 && (<Select value="" onValueChange={(value) => {
@@ -1484,12 +1484,12 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                         <X className="h-4 w-4"/>
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>Xóa khỏi nhóm / Remove from Group</TooltipContent>
+                    <TooltipContent>Remove from Group</TooltipContent>
                   </Tooltip>)}
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="groupColor">Màu nhóm / Group Color</Label>
+              <Label htmlFor="groupColor">Group Color</Label>
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10">
                   <input id="groupColor" type="color" value={editGroupColor} onChange={(e) => setEditGroupColor(e.target.value)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
@@ -1505,17 +1505,17 @@ export function DatabaseView({ onLoadAccount, onUpdateSelected }: DatabaseViewPr
                       <Shuffle className="h-4 w-4"/>
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Màu ngẫu nhiên / Random Color</TooltipContent>
+                  <TooltipContent>Random Color</TooltipContent>
                 </Tooltip>
               </div>
             </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={closeGroupEditor}>
-              Hủy / Cancel
+              Cancel
             </Button>
             <Button onClick={handleSaveGroup}>
-              Lưu / Save
+              Save
             </Button>
           </DialogFooter>
         </DialogContent>

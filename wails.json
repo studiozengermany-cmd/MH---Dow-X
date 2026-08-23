@@ -1,16 +1,16 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "TwitterXMediaBatchDownloader",
-  "outputfilename": "TwitterXMediaBatchDownloader",
+  "name": "MH_Dow_X",
+  "outputfilename": "MH-Dow-X",
   "frontend:install": "pnpm install --frozen-lockfile",
   "frontend:build": "pnpm run build",
   "frontend:dev:watcher": "pnpm run dev",
   "frontend:dev:serverUrl": "auto",
   "author": {
-    "name": "afkarxyz"
+    "name": "Minh Hieu"
   },
   "info": {
-    "productName": "Twitter/X Media Batch Downloader",
+    "productName": "MH - DOW X",
     "productVersion": "5.0.1"
   },
   "wailsjsdir": "./frontend",

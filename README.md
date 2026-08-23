@@ -1,5 +1,5 @@
 <div align="left">
-  <h1>Twitter/X Media Batch Downloader</h1>
+  <h1>MH - DOW X</h1>
   <p>
     Downloads original-quality images and videos from Twitter/X accounts.
   </p>
