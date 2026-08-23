@@ -8,7 +8,7 @@ import (
 	"github.com/zalando/go-keyring"
 )
 
-const authTokenKeyringService = .mh_dow_x"
+const authTokenKeyringService = "MH_Dow_X"
 
 func normalizeAuthTokenSlot(slot string) (string, error) {
 	switch strings.ToLower(strings.TrimSpace(slot)) {
